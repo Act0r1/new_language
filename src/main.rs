@@ -2,7 +2,6 @@ mod parser;
 mod lexer;
 
 use lexer::*;
-
 fn main() {
     let s:&str = "var x = 5";
     let mut n = Lexer::new(s);

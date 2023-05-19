@@ -22,8 +22,22 @@ impl<'a> Lexer<'a> {
         self.len_remain -= 1;
         self.src.next().unwrap_or(EOF_CHAR)
     }
+    pub fn is_the_end(&self) -> bool {
+        self.len_remain > 0
+    }
+    pub fn advance(&mut self) {
+        self.curs += 1;
+    }
     pub fn get_len_remain(&self) -> usize {
         self.len_remain
+    }
+    pub fn skip_whitespace(&mut self) {
+        loop {
+            match self.next_char() {
+                ' ' | '\r' | '\t' | '\n' => self.advance(),
+                _ => return,
+            }
+        }
     }
     pub fn is_eof(&self) -> bool {
         self.src.as_str().is_empty()
@@ -49,7 +63,7 @@ impl<'a> Lexer<'a> {
             '<' => KindOp::Less,
             '/' => KindOp::Comment,
             ',' => KindOp::Comma,
-            _ => KindOp::NotFound
+            _ => KindOp::NotFound,
         };
         ty
     }

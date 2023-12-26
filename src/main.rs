@@ -1,13 +1,17 @@
-mod parser;
 mod lexer;
+mod parser;
 
 use lexer::*;
 fn main() {
-    let s:&str = "var x = 5";
+    let s: &str = "var x = 5";
     let mut n = Lexer::new(s);
-    while let ch = n.next_char() {
+
+    loop {
+        let ch = n.next_char();
+        if ch == EOF_CHAR {
+            break;
+        };
+
         println!("{:?}", ch);
-        
     }
-    println!("{:?}", n);
 }

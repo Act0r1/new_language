@@ -7,7 +7,7 @@ pub struct Lexer<'a> {
     len_remain: usize,
     curs: usize,
 }
-const EOF_CHAR: char = '\0';
+pub const EOF_CHAR: char = '\0';
 
 impl<'a> Lexer<'a> {
     pub fn new(inp: &'a str) -> Self {
@@ -19,7 +19,9 @@ impl<'a> Lexer<'a> {
     }
     pub fn next_char(&mut self) -> char {
         self.curs += 1;
-        self.len_remain -= 1;
+        if self.len_remain != 0 {
+            self.len_remain -= 1
+        };
         self.src.next().unwrap_or(EOF_CHAR)
     }
     pub fn is_the_end(&self) -> bool {
